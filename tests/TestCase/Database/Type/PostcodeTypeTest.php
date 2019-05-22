@@ -43,7 +43,10 @@ class PostcodeTypeTest extends TestCase
         return [
             ['sp110qn'],
             ['SP110QN'],
-            ['sp11 0qn']
+            ['sp11 0qn'],
+            ['XM4 5HQ'],
+            ['W1A 1AA'],
+            ['W1U 4DJ']
         ];
     }
 

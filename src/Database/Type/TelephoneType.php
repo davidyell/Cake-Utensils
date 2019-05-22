@@ -13,13 +13,22 @@ class TelephoneType extends Type
     /**
      * Casts given value from a PHP type to one acceptable by a database.
      *
-     * @param mixed $value Value to be converted to a database equivalent.
+     * @param \libphonenumber\PhoneNumber $value Value to be converted to a database equivalent.
      * @param \Cake\Database\Driver $driver Object from which database preferences and configuration will be extracted.
      * @return mixed Given PHP type casted to one acceptable by a database.
+     * @throws \InvalidArgumentException When the value cannot be converted to string
      */
     public function toDatabase($value, Driver $driver)
     {
-        return $value;
+        if (is_string($value)) {
+            return $value;
+        }
+
+        if (method_exists($value, '__toString')) {
+            return (string)$value;
+        }
+
+        throw new \InvalidArgumentException(sprintf('Could not cast `%s` to database compatible string.', gettype($value)));
     }
 
     /**
@@ -32,17 +41,11 @@ class TelephoneType extends Type
      */
     public function toPHP($value, Driver $driver): ?PhoneNumber
     {
-        $phoneUtil = PhoneNumberUtil::getInstance();
-
         if ($value === 'outbound' || empty($value)) {
             return null;
         }
 
-        try {
-            return $phoneUtil->parse($value, 'GB');
-        } catch (NumberParseException $e) {
-            throw $e;
-        }
+        return $this->castToPhoneNumber($value);
     }
 
     /**
@@ -62,16 +65,35 @@ class TelephoneType extends Type
     }
 
     /**
-     * Marshalls flat data into PHP objects.
+     * Marshals flat data into PHP objects.
      *
      * Most useful for converting request data into PHP objects,
      * that make sense for the rest of the ORM/Database layers.
      *
      * @param mixed $value The value to convert.
      * @return mixed Converted value.
+     * @throws NumberParseException If number cannot be parsed
      */
     public function marshal($value)
     {
-        return $value;
+        return $this->castToPhoneNumber($value);
+    }
+
+    /**
+     * Cast a string to a PhoneNumber instance
+     *
+     * @param string $number
+     * @return PhoneNumber
+     * @throws NumberParseException If number cannot be parsed
+     */
+    private function castToPhoneNumber(string $number): PhoneNumber
+    {
+        $phoneUtil = PhoneNumberUtil::getInstance();
+
+        try {
+            return $phoneUtil->parse($number, 'GB');
+        } catch (NumberParseException $exception) {
+            throw $exception;
+        }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Utensils\Routing\Middleware;
+namespace Utensils\Http\Middleware;
 
 use Cake\Core\Configure;
 use Psr\Http\Message\ResponseInterface;
