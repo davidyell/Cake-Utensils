@@ -1,6 +1,9 @@
 # Cake Utensils
 This is a utility plugin hopefully full of useful bits and bobs you can use to build your CakePHP applications.
 
+## Requirements
+* CakePHP 3.7+
+
 ## What does it include?
 So what utensils are included to help my cake baking?
 
