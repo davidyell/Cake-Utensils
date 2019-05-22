@@ -14,7 +14,7 @@ postal codes into value objects to help with validation, formatting and display.
 
 ### Telephone data type
 A data type class which uses [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) library 
-to marshall telephone numbers into value objects to help with validation, formatting and easier methods for getting 
+to marshall UK telephone numbers into value objects to help with validation, formatting and easier methods for getting 
 specific parts of phone numbers such as dialing codes.
 
 [How do I use custom data types?](https://book.cakephp.org/3.0/en/orm/database-basics.html#adding-custom-types)
