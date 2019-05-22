@@ -94,8 +94,13 @@ class EncryptedStringType extends Type implements OptionalConvertInterface, Type
             return $value;
         }
 
+        $hex = hex2bin($value);
+        if ($hex === false) {
+            return null;
+        }
+
         try {
-            return (string)Security::decrypt(hex2bin($value), $this->key);
+            return (string)Security::decrypt($hex, $this->key);
         } catch (\Exception $exception) {
             return $value;
         }

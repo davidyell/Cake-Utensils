@@ -12,7 +12,7 @@ class PostcodeType extends Type
     /**
      * Casts given value from a PHP type to one acceptable by a database.
      *
-     * @param \VasilDakov\Postcode\Postcode $value Value to be converted to a database equivalent.
+     * @param \VasilDakov\Postcode\Postcode|string $value Value to be converted to a database equivalent.
      * @param \Cake\Database\Driver $driver Object from which database preferences and configuration will be extracted.
      * @return string Given PHP type casted to one acceptable by a database.
      * @throws \VasilDakov\Postcode\Exception\InvalidArgumentException If the value cannot be cast to database compatible value
@@ -75,7 +75,7 @@ class PostcodeType extends Type
     /**
      * Cast a string postcode value into a Postcode value object
      *
-     * @param string $postcode
+     * @param string $postcode Postcode to cast to a Postcode object
      * @return \VasilDakov\Postcode\Postcode
      * @throws InvalidArgumentException If the postcode is invalid
      */

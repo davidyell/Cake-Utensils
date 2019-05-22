@@ -13,7 +13,7 @@ class TelephoneType extends Type
     /**
      * Casts given value from a PHP type to one acceptable by a database.
      *
-     * @param \libphonenumber\PhoneNumber $value Value to be converted to a database equivalent.
+     * @param \libphonenumber\PhoneNumber|string $value Value to be converted to a database equivalent.
      * @param \Cake\Database\Driver $driver Object from which database preferences and configuration will be extracted.
      * @return mixed Given PHP type casted to one acceptable by a database.
      * @throws \InvalidArgumentException When the value cannot be converted to string
@@ -82,7 +82,7 @@ class TelephoneType extends Type
     /**
      * Cast a string to a PhoneNumber instance
      *
-     * @param string $number
+     * @param string $number Telephone number to cast to PhoneNumber object
      * @return PhoneNumber
      * @throws NumberParseException If number cannot be parsed
      */
