@@ -1,5 +1,5 @@
 <?php
-namespace App\Database\Type;
+namespace Utensils\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;

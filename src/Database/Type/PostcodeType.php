@@ -1,5 +1,5 @@
 <?php
-namespace App\Database\Type;
+namespace Utensils\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;
@@ -12,13 +12,22 @@ class PostcodeType extends Type
     /**
      * Casts given value from a PHP type to one acceptable by a database.
      *
-     * @param mixed $value Value to be converted to a database equivalent.
+     * @param \VasilDakov\Postcode\Postcode $value Value to be converted to a database equivalent.
      * @param \Cake\Database\Driver $driver Object from which database preferences and configuration will be extracted.
-     * @return mixed Given PHP type casted to one acceptable by a database.
+     * @return string Given PHP type casted to one acceptable by a database.
+     * @throws \VasilDakov\Postcode\Exception\InvalidArgumentException If the value cannot be cast to database compatible value
      */
     public function toDatabase($value, Driver $driver)
     {
-        return $value;
+        if (is_string($value)) {
+            return $value;
+        }
+
+        if (method_exists($value, '__toString')) {
+            return (string)$value;
+        }
+
+        throw new InvalidArgumentException(sprintf('Could not cast `%s` to database compatible string.', gettype($value)));
     }
 
     /**
@@ -26,16 +35,11 @@ class PostcodeType extends Type
      *
      * @param mixed $value Value to be converted to PHP equivalent
      * @param \Cake\Database\Driver $driver Object from which database preferences and configuration will be extracted
-     * @return Postcode
-     * @throws \VasilDakov\Postcode\Exception\InvalidArgumentException If the postcode is invalid
+     * @return \VasilDakov\Postcode\Postcode
      */
     public function toPHP($value, Driver $driver): Postcode
     {
-        try {
-            return new Postcode($value);
-        } catch (InvalidArgumentException $exception) {
-            throw $exception;
-        }
+        return $this->castToPostcode($value);
     }
 
     /**
@@ -60,11 +64,27 @@ class PostcodeType extends Type
      * Most useful for converting request data into PHP objects,
      * that make sense for the rest of the ORM/Database layers.
      *
-     * @param mixed $value The value to convert.
-     * @return mixed Converted value.
+     * @param string $value The value to convert.
+     * @return \VasilDakov\Postcode\Postcode Converted value.
      */
     public function marshal($value)
     {
-        return $value;
+        return $this->castToPostcode($value);
+    }
+
+    /**
+     * Cast a string postcode value into a Postcode value object
+     *
+     * @param string $postcode
+     * @return \VasilDakov\Postcode\Postcode
+     * @throws InvalidArgumentException If the postcode is invalid
+     */
+    private function castToPostcode(string $postcode): Postcode
+    {
+        try {
+            return new Postcode($postcode);
+        } catch (InvalidArgumentException $exception) {
+            throw $exception;
+        }
     }
 }
