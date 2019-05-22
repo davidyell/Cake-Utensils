@@ -1,0 +1,34 @@
+{
+    "name": "davidyell/cake-utensils",
+    "description": "A collection of useful tools for building CakePHP applications",
+    "require": {
+        "php": ">=7.2",
+        "ext-pdo": "*",
+        "cakephp/cakephp": "^3.7",
+        "giggsey/libphonenumber-for-php": "^8.9",
+        "vasildakov/postcode": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5|^6",
+        "phpstan/phpstan": "^0.11.7"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Yell",
+            "email": "neon1024@gmail.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "suggest": {
+        "dereuromark/cakephp-ide-helper": "Better integration with IDE's",
+        "muffin/trash": "Soft delete functionality",
+        "muffin/slug": "Slug generations for prettier urls",
+        "friendsofcake/search": "Filtering for your index templates",
+        "friendsofcake/crud": "Automatic event driven scaffolding",
+        "friendsofcake/bootstrap-ui": "Helpers for generating Twitter Bootstrap compatible markup",
+        "davidyell/seo": "Manage your page SEO, meta tags and redirects"
+    }
+}
